@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import GalleryPage from "./pages/GalleryPage";
 import ManagePage from "./pages/ManagePage";
-import { getProducts, createProduct, updateProduct, deleteProduct } from "./api";
+import {
+ getProducts,
+ createProduct,
+ updateProduct,
+ deleteProduct,
+} from "./api";
 function App() {
  const [products, setProducts] = useState([]);
  const [view, setView] = useState("gallery");
@@ -12,7 +17,9 @@ function App() {
  useEffect(() => {
    getProducts()
      .then((data) => setProducts(data))
-     .catch(() => setError("Could not load products. Refresh in 1 minute."))
+     .catch(() =>
+       setError("Could not load products. Refresh in 1 minute.")
+     )
      .finally(() => setLoading(false));
  }, []);
  const saveProduct = async (data) => {
@@ -32,7 +39,9 @@ function App() {
    try {
      await deleteProduct(id);
      setProducts((prev) => prev.filter((p) => p._id !== id));
-     if (editingProduct?._id === id) setEditingProduct(null);
+     if (editingProduct?._id === id) {
+       setEditingProduct(null);
+     }
    } catch {
      setError("Could not delete the product.");
    }
@@ -46,7 +55,9 @@ function App() {
 <Navbar view={view} onChangeView={setView} />
      {error && (
 <div className="mx-auto mt-6 max-w-6xl px-6">
-<p className="rounded-xl bg-red-50 p-4 text-red-600">{error}</p>
+<p className="rounded-xl bg-red-50 p-4 text-red-600">
+           {error}
+</p>
 </div>
      )}
      {view === "gallery" ? (
@@ -62,7 +73,7 @@ function App() {
        />
      )}
 <footer className="py-10 text-center text-sm text-slate-400">
-       Made by Shania Denise Furio INF232
+       Made by Shania Denise Furio | INF232
 </footer>
 </div>
  );
